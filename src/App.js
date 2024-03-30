@@ -1,24 +1,29 @@
 import { useState } from "react";
 
 function App() {
-  const [movie, setMovie] = useState({
-    title: "Inception",
-    rating: 8.8,
-  });
+  const [movies, setMovies] = useState([
+    { 
+      id: 1,
+      title: "Inception",
+      ratings: 5,
+    },
+    { 
+      id: 2,
+      title: "Interstellar",
+      ratings: 5,
+    },
+  ]);
   
   const handelClick = () => {
-    const copyMovie = { 
-      ...movie,
-      rating: 9.3,
-    };
-    setMovie(copyMovie);
-  };
-
+    setMovies(
+      movies.map( movie => (movie.id === 1 ? { ...movie, title: "The Dark Knight" } : movie) )
+    );
+  }
+  
   return (
     <>
-      <h1>{movie.title}</h1>
-      <p>Rating: {movie.rating}</p>
-      <button onClick={handelClick}>change rating</button>
+      { movies.map( movie => (<li key={Math.random()}>{movie.title}</li>) ) }
+      <button onClick={handelClick}>Change the name</button>
 
     </>
   );
