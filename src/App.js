@@ -1,30 +1,28 @@
 import { useState } from "react";
 
 function App() {
-  const [movies, setMovies] = useState([
-    { 
-      id: 1,
-      title: "Inception",
-      ratings: 5,
-    },
-    { 
-      id: 2,
-      title: "Interstellar",
-      ratings: 5,
-    },
-  ]);
   
-  const handelClick = () => {
-    setMovies(
-      movies.map( movie => (movie.id === 1 ? { ...movie, title: "The Dark Knight" } : movie) )
-    );
+  const [username, setUsername] = useState("");
+  
+
+  const handelChange = (e) => {
+    setUsername(e.target.value);
   }
-  
+
+  const handelSubmit = (e) => {
+    e.preventDefault();
+    alert(username);
+    setUsername("");
+  }
+
   return (
     <>
-      { movies.map( movie => (<li key={Math.random()}>{movie.title}</li>) ) }
-      <button onClick={handelClick}>Change the name</button>
-
+      
+      <h1>From Demo</h1>
+      <form onSubmit={handelSubmit}>
+        <input type="text" value={username} onChange={handelChange} />
+        <button>Submit</button>
+      </form>
     </>
   );
 }
