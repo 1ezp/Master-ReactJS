@@ -1,28 +1,29 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
+
+
+
 
 function App() {
   
-  const [username, setUsername] = useState("");
-  
+  const [data,setData] = useState([]);
 
-  const handelChange = (e) => {
-    setUsername(e.target.value);
-  }
+  useEffect( ()=>{
+    async function getData(){
+      const response = await fetch("https://jsonplaceholder.typicode.com/posts/");
+      const data = await response.json();
+      
+      if (data && data.length > 0) setData(data);
+    }
 
-  const handelSubmit = (e) => {
-    e.preventDefault();
-    alert(username);
-    setUsername("");
+    getData();
   }
+  ,[]);
 
   return (
     <>
-      
-      <h1>From Demo</h1>
-      <form onSubmit={handelSubmit}>
-        <input type="text" value={username} onChange={handelChange} />
-        <button>Submit</button>
-      </form>
+      <ul>
+        {data.map( (item) => <li>{item.title}</li> ) }
+      </ul>
     </>
   );
 }
