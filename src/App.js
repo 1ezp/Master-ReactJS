@@ -1,21 +1,38 @@
-import { createContext } from "react";
-import C from "./C";
+import { useReducer } from "react";
 
-export const Data = createContext();
-export const Data1 = createContext();
 
 function App() {
-  const name = "Hikmet";
-  const age = 18;
-  return (
-    <>
-      <Data.Provider value={name}>
-        <Data1.Provider value={age}>
-            <C/>
-        </Data1.Provider>
-      </Data.Provider>
+    const [state,dispatch] = useReducer(reducer,initialState);
+    
+    return <>
+        <h1>{state.count}</h1>
+        <button onClick={ ()=> dispatch({type:"increment"}) }>+</button>
+        <button onClick={ ()=> dispatch({type:"decrement"}) }>-</button>
+        <button onClick={ ()=> dispatch({type:"reset"}) }>Reset</button>
     </>
-  );
+}
+
+const initialState = {count:0};
+const reducer = (state,action)=>{
+    switch (action.type){
+        case "increment":
+            return {
+                ...state,
+                count: state.count+1,
+            };
+        case "decrement":
+            return {
+                ...state,
+                count: state.count-1,
+            };
+        case "reset":
+            return {
+                ...state,
+                count: 0,
+            };
+        default:
+            return state;
+    }
 }
 
 export default App;
